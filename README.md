@@ -232,11 +232,11 @@ Após processamento:
 
 # 👥 Integrantes
 
-Dhemerson Sousa de Albuquerque
-Ricardo Augusto de Borba
-Mariana Kellen Araújo Moreira
-Pedro Salazar Pessoa Machado
-Emilly Tavares da Silva 
+* Dhemerson Sousa de Albuquerque
+* Ricardo Augusto de Borba
+* Mariana Kellen Araújo Moreira
+* Pedro Salazar Pessoa Machado
+* Emilly Tavares da Silva 
 
 ---
 
