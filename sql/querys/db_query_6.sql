@@ -1,20 +1,23 @@
 USE spotify_db;
 -- ==================================
--- 			Consulta nº 4
+-- 			Consulta nº 6
 -- ==================================
--- Consulta Secundária, Retorna as musicas acima da média de popularidade
+-- Consulta Secundária, retorna Artistas com a média maior de músicas
 -- **********************************
-SELECT
-    M.nome,
-    M.popularidade,
-    G.nome AS genero
-FROM musica M
-JOIN genero G
-    ON M.FK_GENERO_id_genero = G.id_genero
-WHERE M.FK_GENERO_id_genero IN
+SELECT ART.nome, COUNT(*) AS total_musicas
+FROM artista ART
+JOIN participacao PT
+    ON ART.id_artista = PT.FK_ARTISTA_id_artista
+GROUP BY ART.id_artista, ART.nome
+HAVING COUNT(*) >
 (
-    SELECT id_genero
-    FROM genero
-    WHERE nome = 'Rock'
-);
+    SELECT AVG(qtd)
+    FROM (
+        SELECT COUNT(*) AS qtd
+        FROM participacao
+        GROUP BY FK_ARTISTA_id_artista
+    ) AS media_artistas
+)
+ORDER BY total_musicas DESC
+LIMIT 5
 ;
