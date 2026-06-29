@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+Lista de Musicas
+</h2>
+
+<table class="table table-striped table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Nome</th>
+
+            <th>Email</th>
+
+            <th>Cidade</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for musica in musicas %}
+
+        <tr>
+
+            <td>{{ musica.id_track }}</td>
+
+            <td>{{ musica.nome }}</td>
+
+            <td>{{ musica.popularidade }}</td>
+
+            <td>{{ musica.tempo_ms }}</td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}
