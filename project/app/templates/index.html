@@ -1,49 +1,19 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 
-{% block content %}
+<head>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/app.css') }}">
+</head>
 
-<h2 class="mb-4">
-Lista de Musicas
-</h2>
+<body>
 
-<table class="table table-striped table-hover">
+    <div id="app">
+        
+    </div>
 
-    <thead class="table-dark">
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
-        <tr>
+</body>
 
-            <th>ID</th>
-
-            <th>Nome</th>
-
-            <th>Email</th>
-
-            <th>Cidade</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-    {% for musica in musicas %}
-
-        <tr>
-
-            <td>{{ musica.id_track }}</td>
-
-            <td>{{ musica.nome }}</td>
-
-            <td>{{ musica.popularidade }}</td>
-
-            <td>{{ musica.tempo_ms }}</td>
-
-        </tr>
-
-    {% endfor %}
-
-    </tbody>
-
-</table>
-
-{% endblock %}
+</html>

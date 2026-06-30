@@ -1,48 +1,4 @@
-:root {
-    --margin-vertical: 5px;
-    --margin-horizontal: 5px;
-    --border-width: 1px;
-    --border-radius: 5px;
-    --padding-vertical: 5px;
-    --padding-horizontal: 5px;
-    --row-padding: 1em;
-
-    --font-small: 12px;
-    --font-large: 16px;
-
-    --app-bg: #121212;
-    --header-bg: #080808;
-    --nav-bg: #181818;
-    --table-bg: #121212;
-    --table-highlight-bg: #242424;
-    --button-bg: #252525;
-
-    --border-color: #2d2d2d;
-
-    --accent-light: #1db954;
-    --accent-dark: #233b2c;
-
-    --text-light: #3a3a3a;
-    --text-mid: #6e6e6e;
-    --text-mid-highlight: #a1a1a1;
-    --text-strong: #dddddd;
-    --text-strong-highlight: #ffffff;
-    --text-greyed: #666666;
-}
-
-@font-face {
-    font-family: "Inter";
-    src: url("../fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
-    font-style: normal;
-    font-weight: 100 900;
-}
-
-@font-face {
-    font-family: "Inter";
-    src: url("../fonts/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
-    font-style: italic;
-    font-weight: 100 900;
-}
+@import "variables.css";
 
 body {
     font-family: "Inter";
@@ -62,6 +18,13 @@ body {
 .text-light {
     color: var(--text-light);
     font-size: var(--font-small);
+}
+
+.text-light-bold {
+    color: var(--text-light);
+    font-size: var(--font-small);    
+    font-weight: 500;
+    letter-spacing: 0.1em;
 }
 
 .text-mid {
@@ -333,108 +296,17 @@ body {
 
 }
 
-.musica-nav {
+.foot-btns {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-    padding: calc(2 * var(--padding-vertical)) var(--row-padding);
-    border-bottom: var(--border-width) solid var(--border-color);
-
-    background-color: var(--nav-bg);
-
-    .musica-nav-left {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: calc(2 * var(--margin-horizontal));
-    }
-
-    .musica-nav-center {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .musica-nav-right {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: calc(2 * var(--margin-horizontal));
-    }
+    gap: var(--padding-horizontal);
 }
 
-.musica-tbl {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--table-bg);
-
-    thead th {
-        padding: var(--padding-vertical) var(--row-padding);
-        font-size: var(--font-small);
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        position: sticky;
-        background: var(--table-bg);
-    }
-
-    td {
-        padding: calc(2 * var(--padding-vertical)) var(--row-padding);
-        border-top: var(--border-width) solid var(--border-color);
-        vertical-align: middle;
-    }
-
-    th:nth-child(1) {
-        text-align: left;
-    }
-
-    td:nth-child(2) {
-        color: var(--text-strong);
-    }
-
-    td:nth-child(6) {
-        text-align: center;
-    }
-
-    th:nth-child(7), td:nth-child(7) {
-        text-align: right;
-    }
-
-    .musica-tbl-musica {
-        color: var(--text-strong);
-    }
-
-    .musica-tbl-genero {
-        display: inline-flex;
-        align-items: center;
-
-        padding: 2px 8px;
-        border-radius: var(--border-radius);
-        background-color: var(--button-bg);
-        font-size: var(--font-small);
-    }
-}
-
-.musica-foot {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    border-top: var(--border-width) solid var(--border-color);
-    background-color: var(--nav-bg);
-
-    padding: calc(2 * var(--padding-vertical)) var(--row-padding);
-
-    .foot-btns {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: var(--padding-horizontal);
-    }
+.line-split {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-top: calc(2 * var(--border-width)) solid var(--border-color);
 }

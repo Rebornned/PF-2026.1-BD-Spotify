@@ -15,9 +15,33 @@
 
 <div class="container mt-5">
 
-{% block content %}
+<table>
 
-{% endblock %}
+    <tr>
+
+        <th>Música</th>
+
+        <th>Artista</th>
+
+        <th>Álbum</th>
+
+    </tr>
+
+    {% for musica in musicas %}
+
+    <tr>
+
+        <td>{{ musica.ms_name }}</td>
+
+        <td>{{ musica.art_name }}</td>
+
+        <td>{{ musica.alb_name }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
 
 </div>
 

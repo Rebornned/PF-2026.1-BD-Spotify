@@ -1,0 +1,82 @@
+<div class="app-page">
+    
+    <div class="app-header">
+        <div class="header-left">
+            <img class="spotify-icon" src="../../static/img/spotify_logo.png">
+            <div class="app-title">Spotify Explorer</div>
+        </div>
+        <div class="header-center">
+            <button class="header-btn active">Músicas</button>
+            <button class="header-btn">Artistas</button>
+            <button class="header-btn">Gêneros</button>
+            <button class="header-btn">Estatísticas</button>
+        </div>
+        <div class="header-right"></div>
+    </div>
+
+    <div class="musica-body">
+
+        <div class="musica-nav">
+            <div class="musica-nav-left">
+            <div class="search-bar">
+                <span class="search-icon"><svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></span>
+                <input placeholder="Pesquisar...">
+            </div>
+                <div class="text-light">por</div>
+                <select class="dropdown-btn">
+                    <option value="" selected disabled>música</option>
+                </select>
+            </div>
+            <div class="musica-nav-center"></div>
+            <div class="musica-nav-right">
+                <div class="text-light">ordenar</div>
+                <select class="dropdown-btn" placeholder="ordenar">
+                    <option value="" selected disabled>popularidade</option>
+                </select>
+                <button class="sort-btn">
+                    <div class="up-arrow-icon">⬆</div>
+                    <div class="down-arrow-icon">⬇</div>
+                </button>
+            </div>
+        </div>
+
+        <table class="musica-tbl">
+            <thead class="text-light-bold">
+                <tr>
+                    <th data-type="number">#</th>
+                    <th data-type="string">MÚSICA</th>
+                    <th data-type="string">ARTISTA</th>
+                    <th data-type="string">ALBUM</th>
+                    <th data-type="string">GÊNERO</th>
+                    <th data-type="number">DUR.</th>
+                    <th data-type="number">POP.</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-mid">
+                <tr> <td>1</td> <td>Blinding Lights</td>  <td>The Weeknd</td> <td>After Hours</td>      <td><span class="musica-tbl-genero">Pop</span></td>     <td>200</td> <td>95</td> </tr>
+                <tr> <td>2</td> <td>Shape of You</td>     <td>Ed Sheeran</td> <td>Divide</td>           <td><span class="musica-tbl-genero">Pop</span></td>     <td>233</td> <td>92</td> </tr>
+                <tr> <td>3</td> <td>Hotel California</td> <td>Eagles</td>     <td>Hotel California</td> <td><span class="musica-tbl-genero">Rock</span></td>    <td>390</td> <td>88</td> </tr>
+                <tr> <td>4</td> <td>Lose Yourself</td>    <td>Eminem</td>     <td>8 Mile</td>           <td><span class="musica-tbl-genero">Hip-Hop</span></td> <td>326</td> <td>85</td> </tr>
+                <tr> <td>5</td> <td>Someone Like You</td> <td>Adele</td>      <td>21</td>               <td><span class="musica-tbl-genero">Soul</span></td>    <td>285</td> <td>82</td> </tr>
+            </tbody>
+        </table>
+
+        <div class="musica-foot">
+            <div class="text-light">89740 músicas</div>
+            <div class="foot-btns">
+                <button class="prev-btn"></button>
+                <button class="number-btn active">1</button>
+                <button class="number-btn">2</button>
+                <button class="number-btn">3</button>
+                <div class="text-light">...</div>
+                <button class="number-btn">4487</button>
+                <button class="next-btn"></button>
+            </div>
+            <div class="text-light">pg. 1/4487</div>
+        </div>
+
+
+    </div>
+    
+</div>
