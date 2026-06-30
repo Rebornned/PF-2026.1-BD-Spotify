@@ -1,0 +1,312 @@
+@import "variables.css";
+
+body {
+    font-family: "Inter";
+    padding: 0px 160px;
+    background-color: var(--app-bg);
+
+}
+
+.app-page {
+    border: var(--border-width) solid;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    padding: 0;
+}
+
+.text-light {
+    color: var(--text-light);
+    font-size: var(--font-small);
+}
+
+.text-light-bold {
+    color: var(--text-light);
+    font-size: var(--font-small);    
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+.text-mid {
+    color: var(--text-mid);
+    font-size: var(--font-large);
+}
+
+.grey-btn {
+    margin: 0;
+    border: var(--border-width) solid;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    gap: var(--margin-horizontal);
+
+    background-color: var(--button-bg);
+    color: var(--text-strong);
+
+    font-size: var(--font-large);
+    font-weight: 700;
+
+}
+
+.accent-btn {
+    margin: 0;
+    border: var(--border-width) solid;
+    border-color: var(--accent-dark);
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    gap: var(--margin-horizontal);
+
+    background-color: var(--accent-light);
+    color: black;
+
+    font-size: var(--font-large);
+    font-weight: 700;
+
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    margin: 0;
+    border: var(--border-width) solid;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    gap: var(--margin-horizontal);
+    
+    background-color: var(--button-bg);
+    color: var(--text-strong);
+
+    .search-icon {
+        display: flex;
+        align-items: center;
+
+        margin: none;
+        padding: none;
+        border: none;
+
+        color: var(--text-mid);
+    }
+    .search-icon svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+    }
+    .search-icon svg path {
+        stroke: currentColor;
+        stroke-width: 3;
+    }
+
+    input {
+        border: none;
+        padding: none;
+
+        font-size: var(--font-large);
+
+        background-color: var(--button-bg);
+        color: var(--text-strong);
+        &::placeholder {
+            color: var(--text-light);
+        }
+    }
+}
+
+.dropdown-btn {
+    margin: 0;
+    border: var(--border-width) solid;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+
+    background-color: var(--button-bg);
+    color: var(--text-strong);
+
+    font-size: var(--font-large);
+}
+
+.sort-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 0;
+    border: var(--border-width) solid;
+    border-color: var(--accent-light);
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+
+    background-color: var(--button-bg);
+    
+    .up-arrow-icon {
+        color: var(--accent-light);
+    }
+    .down-arrow-icon {
+        color: var(--text-mid);
+    }
+
+    .active {
+        .up-arrow-icon {
+            color: var(--text-mid);
+        }
+        .down-arrow-icon {
+            color: var(--accent-light);
+        }
+    }
+}
+
+.prev-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    border: var(--border-width) solid transparent;
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+
+    background-color: var(--button-bg);
+    color: var(--text-mid-highlight);
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+
+    &::before {
+        content: "<"
+    }
+}
+.prev-btn.inactive {
+    color: var(--text-light);
+}
+
+.next-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    border: var(--border-width) solid transparent;
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+
+    background-color: var(--button-bg);
+    color: var(--text-mid-highlight);
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+
+    &::before {
+        content: ">";    
+    }
+}
+.next-btn.inactive {
+    color: var(--text-light);
+}
+
+.number-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    border: var(--border-width) solid transparent;
+    border-radius: var(--border-radius);
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    min-height: 1.5rem;
+    padding: 0 0.5rem;
+
+    color: var(--text-mid);
+    background-color: transparent;
+
+    font-size: var(--font-small);
+    font-weight: 700;
+    line-height: 1;
+}
+.number-btn.active {
+    color: black;
+    background-color: var(--accent-light);
+}
+
+.app-header {
+    display: grid;
+    grid-template-columns: 1fr auto 2fr;
+    align-items: center;
+    padding: 1em var(--row-padding);
+    border-bottom: var(--border-width) solid var(--border-color);
+    text-align: center;
+    background-color: var(--header-bg);
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-self: start;
+
+        .spotify-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .app-title {
+            color: var(--text-strong-highlight);
+            font-size: var(--font-large);
+            font-weight: 800;
+        }
+    }
+
+    .header-center {
+        display: flex;
+        gap: 8px;
+        justify-self: center;
+
+        .header-btn {
+            border: none;
+            border-radius: 9999px;
+            padding: var(--padding-vertical) 12px;
+
+            font-size: var(--font-large);
+            font-weight: 600;
+
+            background: transparent;
+            color: var(--text-greyed);
+
+            cursor: pointer;
+
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .header-btn.active {
+            background: var(--accent-light);
+            color: black;
+        }
+    }
+
+    .header-right {
+        justify-self: end;
+    }
+
+}
+
+.foot-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--padding-horizontal);
+}
+
+.line-split {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-top: calc(2 * var(--border-width)) solid var(--border-color);
+}
