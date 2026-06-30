@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
 
+# ====================================================
+#           Configuração da Flask API
+# ====================================================
 load_dotenv()
 
 class Config:

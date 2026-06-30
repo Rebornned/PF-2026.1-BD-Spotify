@@ -148,19 +148,19 @@ quantidade de artistas associados a cada gênero.
 # ************************************************************
 #                          Query 5
 # ************************************************************
-def album_query(offset, limit, order_mode = "DESC"):
+def album_query(order_type, offset, limit, order_mode = "DESC"):
     return f"""
        SELECT ALB.nome AS album,
             COUNT(DISTINCT MS.id_track) AS qtd_musicas,
-            AVG(MS.popularidade) AS popularidade_media,
+            AVG(MS.popularidade) AS pop_media,
             COUNT(DISTINCT ART.id_artista) AS qtd_artistas
         FROM album AS ALB
         LEFT JOIN musica AS MS ON ALB.id_album = MS.FK_ALBUM_id_album
         LEFT JOIN participacao AS PT ON MS.id_track = PT.FK_MUSICA_id_track
         LEFT JOIN artista AS ART ON PT.FK_ARTISTA_id_artista = ART.id_artista
-        GROUP BY ALB.id_album
-        HAVING ALB.nome LIKE :search_value
-        ORDER BY qtd_musicas {order_mode}
+        GROUP BY ALB.id_album, ART.nome
+        HAVING ART.nome LIKE :search_value
+        ORDER BY {ORDER_TYPES[order_type]} {order_mode}
         LIMIT {offset}, {limit}
         ;
     """
