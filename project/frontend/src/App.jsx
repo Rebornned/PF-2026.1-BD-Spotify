@@ -17,7 +17,8 @@ export default function App() {
 
   useEffect(() => {
     // Testa a requisição para o servidor Flask
-    fetch('http://localhost:5000/api/teste-spotify')
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/teste-spotify`)
       .then(response => response.json())
       .then(data => {
         if (data && data.length > 0) {

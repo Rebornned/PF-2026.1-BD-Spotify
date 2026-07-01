@@ -25,7 +25,8 @@ export default function ArtistasTab() {
 
   const carregarListaArtistas = () => {
     setCarregandoTabela(true)
-    fetch(`http://localhost:5000/api/artistas?busca=${encodeURIComponent(busca)}&pagina=${pagina}`)
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/artistas?busca=${encodeURIComponent(busca)}&pagina=${pagina}`)
       .then(res => res.json())
       .then(data => {
         const formatados = data.artistas.map((row, index) => ({
@@ -61,8 +62,9 @@ export default function ArtistasTab() {
 
   useEffect(() => {
     if (!artistaSelecionado) return
-
-    fetch(`http://localhost:5000/api/artistas/detalhes?nome=${encodeURIComponent(artistaSelecionado.nome)}`)
+    // Para isto:
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/artistas/detalhes?nome=${encodeURIComponent(artistaSelecionado.nome)}`)
       .then(res => res.json())
       .then(data => {
         setDetalhesPerfil({

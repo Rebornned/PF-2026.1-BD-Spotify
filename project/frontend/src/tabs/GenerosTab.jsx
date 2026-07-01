@@ -36,7 +36,8 @@ export default function GenerosTab({ generoPreSelecionado, onConsumir }) {
 
   const carregarDadosDoBanco = (termoBusca, paginaAtual, ordenacao, ordemDirecao) => {
     setCarregando(true)
-    const url = `http://localhost:5000/api/generos?busca=${encodeURIComponent(termoBusca)}&ordem=${ordenacao}&direcao=${ordemDirecao}&pagina=${paginaAtual}`
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const url = `${API_URL}/api/generos?busca=${encodeURIComponent(termoBusca)}&ordem=${ordenacao}&direcao=${ordemDirecao}&pagina=${paginaAtual}`
 
     fetch(url)
       .then(res => res.json())

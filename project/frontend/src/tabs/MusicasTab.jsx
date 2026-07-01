@@ -58,8 +58,8 @@ export default function MusicasTab({ onSelecionarGenero }) {
 
   useEffect(() => {
     setCarregando(true)
-
-    const url = `http://localhost:5000/api/musicas?busca=${encodeURIComponent(busca)}&campoBusca=${campoBusca}&ordem=${ordem}&direcao=${direcao}&pagina=${pagina}`
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const url = `${API_URL}/api/musicas?busca=${encodeURIComponent(busca)}&campoBusca=${campoBusca}&ordem=${ordem}&direcao=${direcao}&pagina=${pagina}`
 
     fetch(url)
       .then(response => response.json())

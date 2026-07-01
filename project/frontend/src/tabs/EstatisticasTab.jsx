@@ -60,7 +60,8 @@ export default function EstatisticasTab() {
 
   useEffect(() => {
     setCarregando(true)
-    fetch(`http://localhost:5000/api/estatisticas?tipo=${queryAtiva}`)
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    fetch(`${API_URL}/api/estatisticas?tipo=${queryAtiva}`)
       .then(res => res.json())
       .then(data => {
         setLinhasTabela(data)
