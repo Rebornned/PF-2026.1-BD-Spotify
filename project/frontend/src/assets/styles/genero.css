@@ -1,0 +1,88 @@
+@import "sharedassets.css";
+
+.genero-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    .genero-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        gap: calc(2 * var(--margin-horizontal));
+        box-sizing: border-box;
+
+        border-bottom: var(--border-width) solid var(--border-color);
+        padding: var(--padding-vertical) var(--row-padding);
+        background-color: var(--nav-bg);
+
+        .search-bar {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .grey-btn, .accent-btn {
+            flex: 0 0 auto;
+        }
+    }
+
+    .genero-tbl {
+        table-layout: fixed;
+        border-collapse: collapse;
+        background-color: var(--table-bg);
+
+        thead th {
+            padding: var(--padding-vertical) var(--row-padding);
+            position: sticky;
+            background: var(--table-bg);
+        }
+
+        td {
+            padding: 14px var(--row-padding);
+            border-top: var(--border-width) solid var(--border-color);
+            vertical-align: middle;
+
+            overflow: hidden;
+            text-overflow: hidden;
+            white-space: nowrap;
+        }
+
+        td:nth-child(1), td:nth-child(2) {
+            color: var(--text-strong);
+            font-size: var(--font-large);
+            font-weight: 600;
+        }
+        td:nth-child(3), td:nth-child(4) {
+            color: var(--text-mid);
+            font-size: var(--font-large);
+        }
+        tbody tr:first-child td:nth-child(1), tbody tr:first-child td:nth-child(2) {
+            color: var(--text-strong-highlight);
+        }
+        tbody tr:first-child td:nth-child(3), tbody tr:first-child td:nth-child(4) {
+            color: var(--text-mid-highlight);
+        }
+        th:nth-child(1), td:nth-child(1) {
+            text-align: left;
+        }
+        th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4) {
+            text-align: right;
+        }
+    }
+
+    .genero-foot {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        border-top: var(--border-width) solid var(--border-color);
+        background-color: var(--nav-bg);
+
+        padding: 14px var(--row-padding);
+    }
+
+}

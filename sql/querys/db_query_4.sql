@@ -15,6 +15,6 @@ JOIN artista AS ART ON PT.FK_ARTISTA_id_artista = ART.id_artista
 GROUP BY GEN.id_genero
 HAVING GEN.nome LIKE "%%"
 ORDER BY GEN.nome ASC
-LIMIT 5;
+LIMIT 5
 ;
 

@@ -4,7 +4,8 @@ USE spotify_db;
 -- ==================================
 -- Consulta Secundária, retorna Artistas com a média maior de músicas
 -- **********************************
-SELECT ART.nome, COUNT(*) AS total_musicas
+SELECT ART.nome, 
+	COUNT(*) AS total_musicas
 FROM artista ART
 JOIN participacao PT
     ON ART.id_artista = PT.FK_ARTISTA_id_artista

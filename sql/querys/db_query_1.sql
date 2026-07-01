@@ -18,6 +18,6 @@ JOIN participacao as PT ON MS.id_track = PT.FK_MUSICA_id_track
 JOIN artista as ART ON ART.id_artista = PT.FK_ARTISTA_id_artista
 JOIN genero as GEN ON GEN.id_genero = MS.FK_GENERO_id_genero
 WHERE MS.nome LIKE "%%"
-ORDER BY MS.popularidade DESC
+ORDER BY MS.tempo_ms DESC
 LIMIT 5
 ;
