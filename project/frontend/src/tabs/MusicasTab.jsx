@@ -89,7 +89,7 @@ export default function MusicasTab({ onSelecionarGenero }) {
 
   const renderCell = (row, col, i) => {
     if (col.key === 'idx') return inicio + i + 1
-    if (col.key === 'duracao') return formatarDuracao(row.duracaoSeg)
+    if (col.key === 'duracao') return `${row.duracaoSeg}`
     if (col.key === 'genero') return (
       <button
         type="button"
