@@ -19,7 +19,14 @@
         padding: var(--padding-vertical) var(--row-padding);
         background-color: var(--nav-bg);
 
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: thin;
+
         .stat-btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+
             border: none;
             border-radius: 9999px;
             padding: 6px 16px;
@@ -34,13 +41,15 @@
             color: var(--text-strong);
         }
         .stat-btn.active {
-            background: var(--accent-light);
+            background: #F3F3F3;
             color: black;
         }
     }
 
     .stat-tbl {
         width: 100%;
+        min-width: 600px;
+        table-layout: fixed;
         table-layout: fixed;
         border-collapse: collapse;
         background-color: var(--table-bg);
@@ -107,4 +116,15 @@
         padding: 14px var(--row-padding);
     }
 
+}
+
+.stat-body .stat-nav::-webkit-scrollbar {
+    height: 4px;
+}
+.stat-body .stat-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+.stat-body .stat-nav::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
 }

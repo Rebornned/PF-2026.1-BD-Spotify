@@ -12,8 +12,8 @@
 
 .artista-aside {
     flex: 1 1 30%;
-    min-width: 240px;            /* impede squish abaixo do legível */
-    box-sizing: border-box;      /* padding fica dentro do 30% */
+    min-width: 240px;
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -110,7 +110,7 @@
 
 .artista-body {
     flex: 1 1 70%;
-    min-width: 0;                /* permite encolher abaixo do conteúdo */
+    min-width: 0;
     box-sizing: border-box;
 
     display: flex;
@@ -123,16 +123,20 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-
+        flex-wrap: wrap;
         gap: calc(2 * var(--margin-horizontal));
-        box-sizing: border-box;
 
+        box-sizing: border-box;
         border-bottom: var(--border-width) solid var(--border-color);
         padding: var(--padding-vertical) var(--row-padding);
         background-color: var(--nav-bg);
 
+        > * {
+            flex-shrink: 0;
+        }
+
         .search-bar {
-            flex: 1;
+            flex: 1 1 200px;
             min-width: 0;
         }
 
@@ -143,6 +147,7 @@
 
     .artista-tbl {
         width: 100%;
+        min-width: 500px;
         table-layout: fixed;
         border-collapse: collapse;
         background-color: var(--table-bg);
@@ -208,3 +213,21 @@
     }
 }
 
+@media (max-width: 900px) {
+    .artista-page {
+        flex-direction: column;
+    }
+
+    .artista-aside {
+        flex: 0 0 auto;
+        min-width: 0;
+        width: 100%;
+        border-right: none;
+        border-bottom: var(--border-width) solid var(--border-color);
+    }
+
+    .artista-body {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}

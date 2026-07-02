@@ -89,7 +89,7 @@ export default function MusicasTab({ onSelecionarGenero }) {
 
   const renderCell = (row, col, i) => {
     if (col.key === 'idx') return inicio + i + 1
-    if (col.key === 'duracao') return row.duracaoSeg
+    if (col.key === 'duracao') return `${row.duracaoSeg}`
     if (col.key === 'genero') return (
       <button
         type="button"
@@ -117,10 +117,6 @@ export default function MusicasTab({ onSelecionarGenero }) {
           />
         </div>
 
-        <div className="musica-nav-center">
-          {carregando && <span style={{ color: '#1db954', fontSize: '14px' }}>Atualizando do banco...</span>}
-        </div>
-
         <div className="musica-nav-right">
           <div className="text-light">ordenar</div>
           <Dropdown
@@ -139,8 +135,9 @@ export default function MusicasTab({ onSelecionarGenero }) {
       <DataTable
         className="musica-tbl"
         columns={COLUMNS}
-        rows={musicas} 
+        rows={musicas}
         renderCell={renderCell}
+        loading={carregando}
       />
 
       <div className="musica-foot">
