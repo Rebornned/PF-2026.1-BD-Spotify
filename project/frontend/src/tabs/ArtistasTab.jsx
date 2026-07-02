@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import './../assets/styles/artista.css'
 import DataTable from '../components/DataTable'
 import Pagination from '../components/Pagination'
@@ -29,12 +29,12 @@ export default function ArtistasTab() {
     fetch(`${API_URL}/api/artistas?busca=${encodeURIComponent(busca)}&pagina=${pagina}`)
       .then(res => res.json())
       .then(data => {
-        const formatados = data.artistas.map((row, index) => ({
-          id: index + (pagina - 1) * TAMANHO_PAGINA,
+        const formatados = data.artistas.map((row) => ({
+          id: row.artista,   // ou row.id_artista se o backend devolver
           nome: row.artista,
           qtdMusicas: row.qtd_musicas,
           qtdAlbuns: row.qtd_album,
-          popularidade: Math.round(row.pop_media) // Arredonda a média decimal vinda do SQL
+          popularidade: Math.round(row.pop_media)
         }))
         setArtistas(formatados)
         setTotalArtistas(data.total)
@@ -144,21 +144,29 @@ export default function ArtistasTab() {
           <button type="button" className="grey-btn" onClick={handlePesquisa}>
             Pesquisar
           </button>
+          <button
+            type="button"
+            className="accent-btn"
+            onClick={() => {
+              if (artistas.length > 0) setArtistaSelecionado(artistas[0])
+            }}
+          >
+            Exibir Perfil
+          </button>
         </div>
 
-        {carregandoTabela ? (
-          <p style={{ color: '#1db954', padding: '20px' }}>Carregando dados do banco...</p>
-        ) : (
+        <div style={{ position: 'relative' }}>
           <DataTable
             className="artista-tbl"
             columns={COLUMNS}
             rows={artistas}
+            loading={carregandoTabela}
             onRowClick={(row) => setArtistaSelecionado(row)}
             rowClassName={(row) =>
               artistaSelecionado && row.id === artistaSelecionado.id ? 'row-selected' : ''
             }
           />
-        )}
+        </div>
 
         <div className="artista-foot">
           <div className="text-light">

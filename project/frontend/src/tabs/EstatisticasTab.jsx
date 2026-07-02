@@ -89,26 +89,12 @@ export default function EstatisticasTab() {
         ))}
       </div>
 
-      <div style={{ position: 'relative' }}>
-        {carregando && (
-          <div style={{
-            position: 'absolute', 
-            top: '15px', 
-            right: '20px', 
-            color: '#1db954',
-            fontWeight: 'bold',
-            fontSize: '0.9rem'
-          }}>
-            Executando Subqueries...
-          </div>
-        )}
-
-        <DataTable
-          className="stat-tbl"
-          columns={configuracaoAtual.columns}
-          rows={linhasTabela}
-        />
-      </div>
+      <DataTable
+        className="stat-tbl"
+        columns={configuracaoAtual.columns}
+        rows={linhasTabela}
+        loading={carregando}
+      />
 
       <div className="stat-foot">
         <div className="text-light">

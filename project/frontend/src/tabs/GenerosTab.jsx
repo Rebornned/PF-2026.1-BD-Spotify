@@ -108,13 +108,13 @@ export default function GenerosTab({ generoPreSelecionado, onConsumir }) {
           onChange={handleMudancaBusca}
           placeholder="Pesquisar gênero..."
         />
-        {carregando && <span style={{ color: '#1db954', marginLeft: '10px' }}>Processando SQL...</span>}
       </div>
 
       <DataTable
         className="genero-tbl"
         columns={COLUMNS}
         rows={generos}
+        loading={carregando}
       />
 
       <div className="genero-foot">

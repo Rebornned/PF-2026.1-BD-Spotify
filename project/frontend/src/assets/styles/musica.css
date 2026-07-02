@@ -11,38 +11,53 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
 
-        padding: 14px var(--row-padding);
+        padding: calc(2 * var(--padding-vertical)) var(--row-padding);
         border-bottom: var(--border-width) solid var(--border-color);
-
         background-color: var(--nav-bg);
 
         .musica-nav-left {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
             align-items: center;
-            gap: calc(2 * var(--margin-horizontal));
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1 1 260px;
+            min-width: 0;
+        }
+
+        .musica-nav-left .search-bar {
+            flex: 1 1 160px;
+            min-width: 0;
+        }
+
+        .musica-nav-left > .text-light,
+        .musica-nav-left > .dropdown-btn {
+            flex: 0 0 auto;
         }
 
         .musica-nav-center {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
+            display: none;
         }
 
         .musica-nav-right {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
             align-items: center;
-            gap: calc(2 * var(--margin-horizontal));
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 0 1 auto;
+        }
+
+        .musica-nav-right > * {
+            flex-shrink: 0;
         }
     }
 
     .musica-tbl {
         width: 100%;
+        min-width: 720px;
+        table-layout: fixed;
         border-collapse: collapse;
         background-color: var(--table-bg);
 
@@ -112,3 +127,13 @@
     }
 }
 
+@media (max-width: 480px) {
+    .musica-nav .musica-nav-left,
+    .musica-nav .musica-nav-right {
+        flex-basis: 100%;
+    }
+    .genero-nav .search-bar,
+    .artista-nav .search-bar {
+        flex-basis: 100%;
+    }
+}
