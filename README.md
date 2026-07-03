@@ -6,7 +6,7 @@
 
 Sistema Web Full-Stack de alta performance para exploração, filtragem e análise estatística de dados musicais estruturado sob uma **arquitetura distribuída em 3 camadas (3-Tier)**. O projeto contempla desde a engenharia e saneamento de dados brutos de planilhas até a implantação automatizada em ambiente de nuvem.
 
-Este ecossistema foi desenvolvido como **Trabalho Final da disciplina de Banco de Dados** no percurso acadêmico de Ciência da Computação.
+Este ecossistema foi desenvolvido como **Trabalho Final da disciplina de Banco de Dados 1** no percurso acadêmico de Ciência da Computação.
 
 ---
 
@@ -42,17 +42,12 @@ O projeto adota uma arquitetura descentralizada para simular de forma fiel um am
 
 
 ```
-
-```
    [ Camada de Apresentação ]          [ Camada de Aplicação ]          [ Camada de Dados ]
    +------------------------+          +---------------------+          +-----------------+
    |      React + Vite      |  =====>  |    Flask REST API   |  =====>  |   MySQL Cloud   |
    |    (Render Cloud)      |   HTTP   |    (Render Cloud)   |   TCP    |  (Aiven Cloud)  |
    +------------------------+  <====   +---------------------+  <====   +-----------------+
                                 JSON                                     SQL / SQLAlchemy
-
-```
-
 ```
 
 ---
@@ -271,15 +266,27 @@ VITE_API_URL=http://seu-endereco-do-backend-no-render
 
 ### Painel Geral de Músicas (Busca e Paginação)
 
+<p align="center">
+  <img src="./app_screenshots/index_musics.png" alt="Spotify Explorer UI" width="100%">
+</p>
+
 ### Painel Geral de Artistas (Relacionamentos e Dossiê)
 
+<p align="center">
+  <img src="./app_screenshots/index_artists.png" alt="Spotify Explorer UI" width="100%">
+</p>
+
 ### Métricas e Estatísticas Avançadas (Agregações SQL e Subqueries)
+
+<p align="center">
+  <img src="./app_screenshots/index_statistics.png" alt="Spotify Explorer UI" width="100%">
+</p>
 
 ---
 
 ## 👥 Integrantes do Grupo
 
-* 🎓 **Dhemerson Sousa de Albuquerque**
+* 👤 **Dhemerson Sousa de Albuquerque (Autor e Desenvolvedor Principal)** 
 * 🎓 **Ricardo Augusto de Borba**
 * 🎓 **Mariana Kellen Araújo Moreira**
 * 🎓 **Pedro Salazar Pessoa Machado**
