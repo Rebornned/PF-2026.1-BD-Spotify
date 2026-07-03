@@ -50,15 +50,15 @@ def teste_spotify():
 def listar_musicas():
     # 1. Captura os parâmetros enviados pelo React
     busca = request.args.get('busca', '')
-    campo_busca = request.args.get('campoBusca', 'musica')  # ex: 'musica', 'artista'
-    ordem_front = request.args.get('ordem', 'popularidade') # ex: 'musica', 'popularidade'
+    campo_busca = request.args.get('campoBusca', 'musica')  
+    ordem_front = request.args.get('ordem', 'popularidade') 
     direcao = request.args.get('direcao', 'desc').upper()
     pagina = int(request.args.get('pagina', 1))
     
     limit = 10
     offset = (pagina - 1) * limit
 
-    # 2. Mapeia o campo de busca vindo do front para as chaves de SEARCH_FIELDS
+    # 2. Mapeia o campo de busca vindo do front
     mapa_busca = {
         "musica": "ms_name",
         "artista": "art_name",
@@ -67,7 +67,7 @@ def listar_musicas():
     }
     search_type = mapa_busca.get(campo_busca, "ms_name")
 
-    # 3. Mapeia a ordenação vinda do front para as chaves de ORDER_TYPES
+    # 3. Mapeia a ordenação vinda do front
     mapa_ordem = {
         "musica": "ms_name",
         "popularidade": "ms_popularity",
@@ -78,7 +78,7 @@ def listar_musicas():
     }
     order_type = mapa_ordem.get(ordem_front, "ms_popularity")
 
-    # 4. Executa a main_query
+    # 4. Executa a main_query (Dados da página atual)
     query_dados = text(main_query(
         order_type=order_type,
         search_type=search_type,
@@ -87,24 +87,43 @@ def listar_musicas():
         order_mode=direcao
     ))
     
-    result = db.session.execute(query_dados, {"search_value": f"%{busca}%"}).mappings().all()
+    search_param = f"{busca}%"
+    result = db.session.execute(query_dados, {"search_value": search_param}).mappings().all()
 
-    # 5. Query de COUNT para alimentar a paginação do componente React
-    sql_count = text(f"""
-        SELECT COUNT(*) 
-        FROM musica as MS
-        JOIN album AS ALB ON MS.FK_ALBUM_id_album = ALB.id_album
-        JOIN participacao as PT ON MS.id_track = PT.FK_MUSICA_id_track
-        JOIN artista as ART ON ART.id_artista = PT.FK_ARTISTA_id_artista
-        JOIN genero as GEN ON GEN.id_genero = MS.FK_GENERO_id_genero
-        {"WHERE ART.nome LIKE :search_value" if search_type == "art_name" else ""}
-        {"WHERE MS.nome LIKE :search_value" if search_type == "ms_name" else ""}
-        {"WHERE ALB.nome LIKE :search_value" if search_type == "alb_name" else ""}
-        {"WHERE GEN.nome LIKE :search_value" if search_type == "gen_name" else ""}
-    """)
-    total_registros = db.session.execute(sql_count, {"search_value": f"%{busca}%"}).scalar()
+    if search_type == "ms_name":
+        sql_count = text("SELECT COUNT(*) FROM musica WHERE nome LIKE :search_value")
+        
+    elif search_type == "alb_name":
+        sql_count = text("""
+            SELECT COUNT(*) 
+            FROM musica as MS
+            JOIN album AS ALB ON MS.FK_ALBUM_id_album = ALB.id_album
+            WHERE ALB.nome LIKE :search_value
+        """)
+        
+    elif search_type == "gen_name":
+        sql_count = text("""
+            SELECT COUNT(*) 
+            FROM musica as MS
+            JOIN genero AS GEN ON GEN.id_genero = MS.FK_GENERO_id_genero
+            WHERE GEN.nome LIKE :search_value
+        """)
+        
+    elif search_type == "art_name":
+        # Junta apenas o necessário para alcançar o artista e garante contagem única de músicas
+        sql_count = text("""
+            SELECT COUNT(DISTINCT MS.id_track) 
+            FROM musica as MS
+            JOIN participacao as PT ON MS.id_track = PT.FK_MUSICA_id_track
+            JOIN artista as ART ON ART.id_artista = PT.FK_ARTISTA_id_artista
+            WHERE ART.nome LIKE :search_value
+        """)
+    else:
+        sql_count = text("SELECT COUNT(*) FROM musica")
 
-    # Devolve a estrutura no formato que o componente espera consumir
+    total_registros = db.session.execute(sql_count, {"search_value": search_param}).scalar()
+
+    # Devolve a estrutura para o React
     return jsonify({
         "musicas": [dict(row) for row in result],
         "total": total_registros
@@ -113,7 +132,6 @@ def listar_musicas():
 # ***************************************************
 #                     Artist route
 # ***************************************************
-# 1. ENDPOINT PARA A TABELA DE ARTISTAS
 @main.route('/api/artistas')
 def listar_artistas():
     busca = request.args.get('busca', '')
@@ -128,7 +146,7 @@ def listar_artistas():
         order_mode="DESC"
     ))
     
-    result = db.session.execute(query_dados, {"search_value": f"%{busca}%"}).mappings().all()
+    result = db.session.execute(query_dados, {"search_value": f"{busca}%"}).mappings().all()
 
     # Query de COUNT para a paginação
     sql_count = text("""
@@ -136,14 +154,13 @@ def listar_artistas():
         FROM artista AS ART
         WHERE ART.nome LIKE :search_value
     """)
-    total_registros = db.session.execute(sql_count, {"search_value": f"%{busca}%"}).scalar()
+    total_registros = db.session.execute(sql_count, {"search_value": f"{busca}%"}).scalar()
 
     return jsonify({
         "artistas": [dict(row) for row in result],
         "total": total_registros
     })
 
-# 2. ENDPOINT PARA O PERFIL DETALHADO DO ARTISTA
 @main.route('/api/artistas/detalhes')
 def detalhes_artista():
     nome_artista = request.args.get('nome', '')
@@ -188,7 +205,7 @@ def listar_generos():
         order_mode=direcao
     ))
     
-    result = db.session.execute(query_dados, {"search_value": f"%{busca}%"}).mappings().all()
+    result = db.session.execute(query_dados, {"search_value": f"{busca}%"}).mappings().all()
 
     lista_generos = []
     for row in result:
@@ -204,7 +221,7 @@ def listar_generos():
         FROM genero AS GEN
         WHERE GEN.nome LIKE :search_value
     """)
-    total_registros = db.session.execute(sql_count, {"search_value": f"%{busca}%"}).scalar()
+    total_registros = db.session.execute(sql_count, {"search_value": f"{busca}%"}).scalar()
 
     return jsonify({
         "generos": lista_generos,

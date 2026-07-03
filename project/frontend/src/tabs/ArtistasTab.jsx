@@ -17,6 +17,7 @@ export default function ArtistasTab() {
   const [busca, setBusca] = useState('')
   const [pagina, setPagina] = useState(1)
   
+  const [termoDebounced, setTermoDebounced] = useState(busca)
   const [artistas, setArtistas] = useState([])
   const [totalArtistas, setTotalArtistas] = useState(0)
   const [artistaSelecionado, setArtistaSelecionado] = useState(null)
@@ -26,7 +27,7 @@ export default function ArtistasTab() {
   const carregarListaArtistas = () => {
     setCarregandoTabela(true)
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    fetch(`${API_URL}/api/artistas?busca=${encodeURIComponent(busca)}&pagina=${pagina}`)
+    fetch(`${API_URL}/api/artistas?busca=${encodeURIComponent(termoDebounced)}&pagina=${pagina}`)
       .then(res => res.json())
       .then(data => {
         const formatados = data.artistas.map((row) => ({
@@ -51,13 +52,22 @@ export default function ArtistasTab() {
       })
   }
 
+useEffect(() => {
+  const cronometro = setTimeout(() => {
+    setTermoDebounced(busca)
+  }, 350) // 350 milissegundos de espera
+
+  // Se o usuário digitar antes dos 350ms, limpa o cronômetro anterior
+  return () => clearTimeout(cronometro)
+}, [busca])
+
   useEffect(() => {
     setPagina(1)
-  }, [busca])
+  }, [termoDebounced])
 
   useEffect(() => {
   carregarListaArtistas()
-  }, [busca, pagina])
+  }, [termoDebounced, pagina])
 
   const handlePesquisa = () => {
   setPagina(1)
