@@ -58,7 +58,7 @@ def listar_musicas():
     limit = 10
     offset = (pagina - 1) * limit
 
-    # 2. Mapeia o campo de busca vindo do front para as chaves do seu SEARCH_FIELDS
+    # 2. Mapeia o campo de busca vindo do front para as chaves de SEARCH_FIELDS
     mapa_busca = {
         "musica": "ms_name",
         "artista": "art_name",
@@ -67,7 +67,7 @@ def listar_musicas():
     }
     search_type = mapa_busca.get(campo_busca, "ms_name")
 
-    # 3. Mapeia a ordenação vinda do front para as chaves do seu ORDER_TYPES
+    # 3. Mapeia a ordenação vinda do front para as chaves de ORDER_TYPES
     mapa_ordem = {
         "musica": "ms_name",
         "popularidade": "ms_popularity",
@@ -78,7 +78,7 @@ def listar_musicas():
     }
     order_type = mapa_ordem.get(ordem_front, "ms_popularity")
 
-    # 4. Executa a sua main_query original intacta
+    # 4. Executa a main_query
     query_dados = text(main_query(
         order_type=order_type,
         search_type=search_type,
@@ -90,7 +90,6 @@ def listar_musicas():
     result = db.session.execute(query_dados, {"search_value": f"%{busca}%"}).mappings().all()
 
     # 5. Query de COUNT para alimentar a paginação do componente React
-    # Criamos uma versão simplificada baseada nas suas tabelas apenas para o count ser rápido
     sql_count = text(f"""
         SELECT COUNT(*) 
         FROM musica as MS
@@ -122,7 +121,6 @@ def listar_artistas():
     limit = 10
     offset = (pagina - 1) * limit
 
-    # Usa a sua query principal de artistas ordenando por popularidade média
     query_dados = text(art_query(
         order_type="avg_popularity",
         offset=offset,
@@ -150,11 +148,9 @@ def listar_artistas():
 def detalhes_artista():
     nome_artista = request.args.get('nome', '')
 
-    # Executa a sua query de Top 5 Músicas
     query_musicas = text(pop_msc_art_query(offset=0, limit=5))
     res_musicas = db.session.execute(query_musicas, {"search_value": nome_artista}).mappings().all()
 
-    # Executa a sua query de Top 3 Álbuns ordenando por popularidade média do álbum
     query_albuns = text(album_query(order_type="avg_popularity", offset=0, limit=3, order_mode="DESC"))
     res_albuns = db.session.execute(query_albuns, {"search_value": nome_artista}).mappings().all()
 
@@ -194,11 +190,9 @@ def listar_generos():
     
     result = db.session.execute(query_dados, {"search_value": f"%{busca}%"}).mappings().all()
 
-    # Tratamos os dados aqui no Python para evitar quebras no JavaScript
     lista_generos = []
     for row in result:
         dados_row = dict(row)
-        # Força a conversão segura de pop_media para float arredondado com 1 casa decimal
         if dados_row.get('pop_media') is not None:
             dados_row['pop_media'] = round(float(dados_row['pop_media']), 1)
         else:
