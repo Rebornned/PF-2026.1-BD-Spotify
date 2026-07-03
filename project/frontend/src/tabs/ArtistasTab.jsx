@@ -23,6 +23,8 @@ export default function ArtistasTab() {
   const [artistaSelecionado, setArtistaSelecionado] = useState(null)
   const [detalhesPerfil, setDetalhesPerfil] = useState({ topMusicas: [], topAlbuns: [] })
   const [carregandoTabela, setCarregandoTabela] = useState(false)
+  
+  const [carregandoDetalhes, setCarregandoDetalhes] = useState(false)
 
   const carregarListaArtistas = () => {
     setCarregandoTabela(true)
@@ -31,7 +33,7 @@ export default function ArtistasTab() {
       .then(res => res.json())
       .then(data => {
         const formatados = data.artistas.map((row) => ({
-          id: row.artista,   // ou row.id_artista se o backend devolver
+          id: row.artista,   
           nome: row.artista,
           qtdMusicas: row.qtd_musicas,
           qtdAlbuns: row.qtd_album,
@@ -41,7 +43,6 @@ export default function ArtistasTab() {
         setTotalArtistas(data.total)
         setCarregandoTabela(false)
         
-        // Auto-seleciona o primeiro da lista se não houver nenhum selecionado
         if (formatados.length > 0 && !artistaSelecionado) {
           setArtistaSelecionado(formatados[0])
         }
@@ -52,30 +53,27 @@ export default function ArtistasTab() {
       })
   }
 
-useEffect(() => {
-  const cronometro = setTimeout(() => {
-    setTermoDebounced(busca)
-  }, 350) // 350 milissegundos de espera
+  useEffect(() => {
+    const cronometro = setTimeout(() => {
+      setTermoDebounced(busca)
+    }, 350)
 
-  // Se o usuário digitar antes dos 350ms, limpa o cronômetro anterior
-  return () => clearTimeout(cronometro)
-}, [busca])
+    return () => clearTimeout(cronometro)
+  }, [busca])
 
   useEffect(() => {
     setPagina(1)
   }, [termoDebounced])
 
   useEffect(() => {
-  carregarListaArtistas()
+    carregarListaArtistas()
   }, [termoDebounced, pagina])
-
-  const handlePesquisa = () => {
-  setPagina(1)
-  carregarListaArtistas()
-  }
 
   useEffect(() => {
     if (!artistaSelecionado) return
+    
+    setCarregandoDetalhes(true)
+    
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     fetch(`${API_URL}/api/artistas/detalhes?nome=${encodeURIComponent(artistaSelecionado.nome)}`)
       .then(res => res.json())
@@ -84,8 +82,12 @@ useEffect(() => {
           topMusicas: data.topMusicas.map(m => ({ nome: m.musica, popularidade: m.popularidade })),
           topAlbuns: data.topAlbuns.map(a => ({ nome: a.album, popularidade: Math.round(a.pop_media) }))
         })
+        setCarregandoDetalhes(false)
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+        setCarregandoDetalhes(false)
+      })
   }, [artistaSelecionado])
 
   const totalPaginas = Math.max(1, Math.ceil(totalArtistas / TAMANHO_PAGINA))
@@ -94,7 +96,14 @@ useEffect(() => {
     <div className="artista-page">
 
       <aside className="artista-aside">
-        {artistaSelecionado ? (
+        {!artistaSelecionado ? (
+          <div className="text-light">Selecione um artista para ver detalhes.</div>
+        ) : carregandoDetalhes ? (
+          /* Mensagem visual de carregamento centralizada na aba lateral */
+          <div className="text-light" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', minHeight: '200px' }}>
+            Carregando detalhes...
+          </div>
+        ) : (
           <>
             <div className="artista-aside-head">
               <div className="artista-aside-nome">{artistaSelecionado.nome}</div>
@@ -140,8 +149,6 @@ useEffect(() => {
               </table>
             </div>
           </>
-        ) : (
-          <div className="text-light">Selecione um artista para ver detalhes.</div>
         )}
       </aside>
 
