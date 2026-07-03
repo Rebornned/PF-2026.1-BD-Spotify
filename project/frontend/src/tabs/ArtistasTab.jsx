@@ -52,17 +52,20 @@ export default function ArtistasTab() {
   }
 
   useEffect(() => {
-    carregarListaArtistas()
-  }, [pagina])
+    setPagina(1)
+  }, [busca])
+
+  useEffect(() => {
+  carregarListaArtistas()
+  }, [busca, pagina])
 
   const handlePesquisa = () => {
-    setPagina(1)
-    carregarListaArtistas()
+  setPagina(1)
+  carregarListaArtistas()
   }
 
   useEffect(() => {
     if (!artistaSelecionado) return
-    // Para isto:
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     fetch(`${API_URL}/api/artistas/detalhes?nome=${encodeURIComponent(artistaSelecionado.nome)}`)
       .then(res => res.json())
@@ -80,7 +83,6 @@ export default function ArtistasTab() {
   return (
     <div className="artista-page">
 
-      {/**/}
       <aside className="artista-aside">
         {artistaSelecionado ? (
           <>
@@ -133,7 +135,6 @@ export default function ArtistasTab() {
         )}
       </aside>
 
-      {/**/}
       <div className="artista-body">
         <div className="artista-nav">
           <SearchBar
@@ -141,18 +142,6 @@ export default function ArtistasTab() {
             onChange={setBusca}
             placeholder="Pesquisar artista..."
           />
-          <button type="button" className="grey-btn" onClick={handlePesquisa}>
-            Pesquisar
-          </button>
-          <button
-            type="button"
-            className="accent-btn"
-            onClick={() => {
-              if (artistas.length > 0) setArtistaSelecionado(artistas[0])
-            }}
-          >
-            Exibir Perfil
-          </button>
         </div>
 
         <div style={{ position: 'relative' }}>
