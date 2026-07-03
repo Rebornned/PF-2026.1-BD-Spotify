@@ -47,19 +47,27 @@ export default function MusicasTab({ onSelecionarGenero }) {
   const [ordem, setOrdem] = useState('popularidade')
   const [direcao, setDirecao] = useState('desc')
   const [pagina, setPagina] = useState(1)
+  const [termoDebounced, setTermoDebounced] = useState(busca)
 
   const [musicas, setMusicas] = useState([])
   const [totalMusicas, setTotalMusicas] = useState(0)
   const [carregando, setCarregando] = useState(false)
 
+  useEffect(() => {
+    const cronometro = setTimeout(() => {
+      setTermoDebounced(busca)
+    }, 350) // 350 milissegundos de espera
+    return () => clearTimeout(cronometro)
+  }, [busca])
+
   useEffect(() => { 
     setPagina(1) 
-  }, [busca, campoBusca, ordem, direcao])
+  }, [termoDebounced, campoBusca, ordem, direcao])
 
   useEffect(() => {
     setCarregando(true)
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    const url = `${API_URL}/api/musicas?busca=${encodeURIComponent(busca)}&campoBusca=${campoBusca}&ordem=${ordem}&direcao=${direcao}&pagina=${pagina}`
+    const url = `${API_URL}/api/musicas?busca=${encodeURIComponent(termoDebounced)}&campoBusca=${campoBusca}&ordem=${ordem}&direcao=${direcao}&pagina=${pagina}`
 
     fetch(url)
       .then(response => response.json())
