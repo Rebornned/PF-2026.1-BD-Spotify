@@ -279,7 +279,7 @@ def obter_estatisticas():
 
     # 4. MÚSICA TOP POR GÊNERO
     elif tipo == 'topPorGenero':
-        query = text(top_gen_msc_query(offset=0, limit=10)) # Exibe os 10 primeiros gêneros ordenados
+        query = text(top_gen_msc_query(offset=0, limit=10)) 
         result = db.session.execute(query).mappings().all()
         for i, row in enumerate(result):
             lista_resultado.append({

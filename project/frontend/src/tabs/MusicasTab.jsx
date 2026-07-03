@@ -56,7 +56,7 @@ export default function MusicasTab({ onSelecionarGenero }) {
   useEffect(() => {
     const cronometro = setTimeout(() => {
       setTermoDebounced(busca)
-    }, 350) // 350 milissegundos de espera
+    }, 0) 
     return () => clearTimeout(cronometro)
   }, [busca])
 
@@ -145,7 +145,7 @@ export default function MusicasTab({ onSelecionarGenero }) {
         columns={COLUMNS}
         rows={musicas}
         renderCell={renderCell}
-        loading={carregando}
+        loading={carregando && musicas.length === 0}
       />
 
       <div className="musica-foot">
