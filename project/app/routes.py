@@ -166,10 +166,10 @@ def detalhes_artista():
     nome_artista = request.args.get('nome', '')
 
     query_musicas = text(pop_msc_art_query(offset=0, limit=5))
-    res_musicas = db.session.execute(query_musicas, {"search_value": nome_artista}).mappings().all()
+    res_musicas = db.session.execute(query_musicas, {"search_value": f"{nome_artista}%"}).mappings().all()
 
     query_albuns = text(album_query(order_type="avg_popularity", offset=0, limit=3, order_mode="DESC"))
-    res_albuns = db.session.execute(query_albuns, {"search_value": nome_artista}).mappings().all()
+    res_albuns = db.session.execute(query_albuns, {"search_value": f"{nome_artista}%"}).mappings().all()
 
     return jsonify({
         "topMusicas": [dict(row) for row in res_musicas],
