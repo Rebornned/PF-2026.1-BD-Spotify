@@ -68,17 +68,17 @@ main_query: Consulta principal para buscar músicas, artistas,
 # ************************************************************
 def art_query(order_type, offset, limit,  order_mode = "DESC"):
     return f"""
-        SELECT ART.nome AS artista,
+        SELECT 
+            ART.nome AS artista,
             AVG(MS.popularidade) AS pop_media,
             COUNT(MS.id_track) AS qtd_musicas,
-            COUNT(DISTINCT ALB.id_album) AS qtd_album
-        FROM musica as MS
-        JOIN album as ALB ON MS.FK_ALBUM_id_album = ALB.id_album
-        JOIN participacao AS PT ON MS.id_track = PT.FK_MUSICA_id_track
-        JOIN artista AS ART ON PT.FK_ARTISTA_id_artista = ART.id_artista
-        GROUP BY ART.id_artista
-        HAVING ART.nome LIKE :search_value
-        ORDER BY {ORDER_TYPES[order_type]} {order_mode}
+            COUNT(DISTINCT MS.FK_ALBUM_id_album) AS qtd_album
+        FROM artista AS ART
+        JOIN participacao AS PT ON ART.id_artista = PT.FK_ARTISTA_id_artista
+        JOIN musica AS MS ON PT.FK_MUSICA_id_track = MS.id_track
+        WHERE ART.nome LIKE :search_value
+        GROUP BY ART.id_artista, ART.nome
+        ORDER BY {ORDER_TYPES[order_type]} {order_mode}    
         LIMIT {offset}, {limit}
         ;
     """
@@ -150,16 +150,20 @@ quantidade de artistas associados a cada gênero.
 # ************************************************************
 def album_query(order_type, offset, limit, order_mode = "DESC"):
     return f"""
-       SELECT ALB.nome AS album,
+        SELECT ALB.nome AS album,
             COUNT(DISTINCT MS.id_track) AS qtd_musicas,
             AVG(MS.popularidade) AS pop_media,
             COUNT(DISTINCT ART.id_artista) AS qtd_artistas
-        FROM album AS ALB
-        LEFT JOIN musica AS MS ON ALB.id_album = MS.FK_ALBUM_id_album
-        LEFT JOIN participacao AS PT ON MS.id_track = PT.FK_MUSICA_id_track
-        LEFT JOIN artista AS ART ON PT.FK_ARTISTA_id_artista = ART.id_artista
+        FROM participacao AS PT
+        JOIN (
+            SELECT * FROM artista
+            WHERE artista.nome LIKE :search_value
+        ) AS ART ON PT.FK_ARTISTA_id_artista = ART.id_artista
+        JOIN musica as MS
+        ON PT.FK_MUSICA_id_track = MS.id_track
+        JOIN album as ALB
+        ON MS.FK_ALBUM_id_album = ALB.id_album
         GROUP BY ALB.id_album, ART.nome
-        HAVING ART.nome LIKE :search_value
         ORDER BY {ORDER_TYPES[order_type]} {order_mode}
         LIMIT {offset}, {limit}
         ;
